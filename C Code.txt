@@ -1,0 +1,48 @@
+typedef struct {
+    int top;
+    int *item;
+} MinStack;
+
+/** initialize your data structure here. */
+MinStack* minStackCreate(int maxSize) {
+    MinStack *s = (MinStack *)malloc(sizeof(MinStack));
+    s->item = (int *)malloc(sizeof(int) * maxSize);
+    s->top = 0;
+    return s;
+}
+
+void minStackPush(MinStack* obj, int x) {
+    obj->item[obj->top++] = x;
+}
+
+void minStackPop(MinStack* obj) {
+    if(!obj)    return ;
+    obj->top--;
+}
+
+int minStackTop(MinStack* obj) {
+    return obj->item[obj->top-1];
+}
+
+int minStackGetMin(MinStack* obj) {
+    if(!obj || obj->top == 0)   return NULL;
+    int min = obj->item[0];
+    for(int i = 1; i < obj->top; ++i){
+        if(min > obj->item[i])  min = obj->item[i];
+    }
+    return min;
+}
+
+void minStackFree(MinStack* obj) {
+    free(obj);
+}
+
+/**
+ * Your MinStack struct will be instantiated and called as such:
+ * struct MinStack* obj = minStackCreate(maxSize);
+ * minStackPush(obj, x);
+ * minStackPop(obj);
+ * int param_3 = minStackTop(obj);
+ * int param_4 = minStackGetMin(obj);
+ * minStackFree(obj);
+ */
